@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 const App = () => {
 
     const [Films, setFilms] = useState([])
+    const [FilmsLoaded, setFilmsLoaded] = useState(false)
     const [People, setPeople] = useState([])
+    const [PeopleLoaded, setPeopleLoaded] = useState(false)
 
     useEffect(() => {
 
@@ -26,17 +28,88 @@ const App = () => {
     }, [])
 
     const handleFilm = () => {
-        document.getElementById("film-container").classList.remove("d-none")
-        document.getElementById("people-container").classList.add("d-none")
-
+        setPeopleLoaded(false)
+        setFilmsLoaded(true)
     }
 
     const handlePeople = () => {
-        document.getElementById("people-container").classList.remove("d-none")
-        document.getElementById("film-container").classList.add("d-none")
+        setFilmsLoaded(false)
+        setPeopleLoaded(true)
     }
 
-    return (
+    if (FilmsLoaded === false && PeopleLoaded === false) {
+        return (
+            <div className="container">
+            <h1 className="text-center m-3">Not "Jib-ley"</h1>
+            <div className="d-flex justify-content-center">
+                <button className="btn btn-outline-dark m-2" onClick={handleFilm}>Load Films</button>
+                <button className="btn btn-outline-dark m-2" onClick={handlePeople}>Load People</button>
+            </div>
+            </div>
+        )
+    } else if (FilmsLoaded === true && PeopleLoaded === false) {
+        return (
+            <div className="container">
+                <h1 className="text-center m-3">Not "Jib-ley"</h1>
+                <div className="d-flex justify-content-center">
+                    <button className="btn btn-outline-dark m-2" onClick={handleFilm}>Load Films</button>
+                    <button className="btn btn-outline-dark m-2" onClick={handlePeople}>Load People</button>
+                </div>
+                <div className="row justify-content-center mt-5" id="film-container">
+                    {Films.map(film => (
+                        <div className="col-md-6" key={`film-card-${film.id}`} >
+                            <div className="card mt-2 shadow">
+                                <div className="card-body">
+                                    <h3 className="card-title">{`${film.title}`}</h3>
+                                    <p className="card-text">{`${film.description}`}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>)
+            </div>
+        )
+    }
+
+
+    if (PeopleLoaded === false && FilmsLoaded === false) {
+        return (
+            <div className="container">
+            <h1 className="text-center m-3">Not "Jib-ley"</h1>
+            <div className="d-flex justify-content-center">
+                <button className="btn btn-outline-dark m-2" onClick={handleFilm}>Load Films</button>
+                <button className="btn btn-outline-dark m-2" onClick={handlePeople}>Load People</button>
+            </div>
+            </div>
+        )
+    } else if (PeopleLoaded === true && FilmsLoaded === false) {
+        return (
+            <div className="container">
+                <h1 className="text-center m-3">Not "Jib-ley"</h1>
+                <div className="d-flex justify-content-center">
+                    <button className="btn btn-outline-dark m-2" onClick={handleFilm}>Load Films</button>
+                    <button className="btn btn-outline-dark m-2" onClick={handlePeople}>Load People</button>
+                </div>
+                <div className="row justify-content-center mt-5" id="people-container">
+                    {People.map(person => (
+                        <div className="col-md-6" key={`person-card-${person.id}`} >
+                            <div className="card mt-2 shadow">
+                                <div className="card-body">
+                                    <h3 className="card-title">{`${person.name}`}</h3>
+                                    <p className="card-text">{`${person.age}`}</p>
+                                    <p className="card-text">{`${person.gender}`}</p>
+                                    <p className="card-text d-inline">{`The film this person was in was `}</p>
+                                    <a href={`${person.films[0]}`} className="d-inline" target="_blank">this</a>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    {/* return (
         <div>
             <div className="container">
                 <h1 className="text-center">Not "jib-lee"</h1>
@@ -44,7 +117,7 @@ const App = () => {
                     <button className="btn btn-outline-dark m-2" onClick={handleFilm}>Load Films</button>
                     <button className="btn btn-outline-dark m-2" onClick={handlePeople}>Load People</button>
                 </div>
-                <div className="row justify-content-center mt-5 d-none" id="film-container">
+                <div className="row justify-content-center mt-5" id="film-container">
                     {Films.map(film => (
                         <div className="col-md-6" key={`film-card-${film.id}`} >
                             <div className="card mt-2 shadow">
@@ -56,7 +129,7 @@ const App = () => {
                         </div>
                     ))}
                 </div>
-                <div className="row justify-content-center mt-5 d-none" id="people-container">
+                <div className="row justify-content-center mt-5" id="people-container">
                     {People.map(person => (
                         <div className="col-md-6" key={`person-card-${person.id}`} >
                             <div className="card mt-2 shadow">
@@ -65,7 +138,7 @@ const App = () => {
                                     <p className="card-text">{`${person.age}`}</p>
                                     <p className="card-text">{`${person.gender}`}</p>
                                     <p className="card-text d-inline">{`The film this person was in was `}</p>
-                                    <a href={`${person.films[0]}`} className="d-inline">this</a>
+                                    <a href={`${person.films[0]}`} className="d-inline" target="_blank">this</a>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +146,8 @@ const App = () => {
                 </div>
             </div>
         </div>
-    )
+    )*/}
 }
+
 
 export default App;
